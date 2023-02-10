@@ -1,0 +1,54 @@
+import tkinter as tk
+from tkinter import ttk
+from tkinter import messagebox as mb
+
+class Calculadora:
+
+    def __init__(self):
+        self.ventana = tk.Tk()
+        self.ventana.title('Calculadora de impuestos de Steam')
+        self.labelframe_ingreso = ttk.LabelFrame(self.ventana, text = 'Ingreso de datos')
+        self.labelframe_ingreso.grid(column = 0, row = 0, padx = 5, pady = 10)
+        self.menues()
+        self.ingreso_datos()
+        self.ventana.resizable(False, False)
+        self.ventana.mainloop()
+
+
+    def ingreso_datos(self):
+        self.aviso_ingresarvalor = ttk.Label(self.labelframe_ingreso, text = 'Ingresá el valor total del juego:')
+        self.aviso_ingresarvalor.grid(column = 0, row = 0, padx = 4, pady = 4)
+        self.variable_valor = tk.StringVar()
+        self.entry_valorjuego = ttk.Entry(self.labelframe_ingreso, width = 10, textvariable = self.variable_valor)
+        self.entry_valorjuego.grid(column = 1, row = 0, padx = 4, pady = 4)
+        self.aviso_ingresarimpuesto = tk.Label(self.labelframe_ingreso, text = 'Ingresá los impuestos totales sin el signo:')
+        self.aviso_ingresarimpuesto.grid(column = 0, row = 1, padx = 4, pady = 4)
+        self.variable_impuesto = tk.StringVar()
+        self.entry_impuestos = ttk.Entry(self.labelframe_ingreso, width = 10, textvariable = self.variable_impuesto)
+        self.entry_impuestos.grid(column = 1, row = 1, padx = 4, pady = 4)
+        self.boton_calcularimpuesto = ttk.Button(self.labelframe_ingreso, text = 'Calcular total', command = self.sumar)
+        self.boton_calcularimpuesto.grid(column = 0, row = 2, padx = 4, pady = 4, sticky = 'we')
+
+    def menues(self):
+        menu = tk.Menu(self.ventana)
+        self.ventana.config(menu = menu)
+        menu_informacion = tk.Menu(menu, tearoff = 0)
+        menu_informacion.add_command(label = 'Acerca de...', command = self.acerca_de)
+        menu.add_cascade(label = 'Información', menu= menu_informacion)
+    
+
+    def acerca_de(self):
+        mb.showinfo('Atención', 'El programa está en su versión 0.1.0.')
+
+
+    def sumar(self):
+        if self.variable_valor.get() == '' or self.variable_impuesto.get() == '':
+            mb.showerror('Error', 'No puedes dejar los cuadros de entrada vacíos.')
+        else:
+            total_impuestos = (float(self.variable_valor.get()) * float(self.variable_impuesto.get())) // 100
+            total_coste = total_impuestos + float(self.variable_valor.get())
+            total_coste = round(total_coste)
+            self.ventana.title(f'El total a pagar es {total_coste}')
+    
+
+calculadora = Calculadora()
