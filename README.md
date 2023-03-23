@@ -1,2 +1,2 @@
-# Taxes-Calculator
-This is a taxes calculator I made using Python language and it was the first project I ever made.
+# Tax-Calculator
+This project was made using Python language and it was the first project I've ever made.
